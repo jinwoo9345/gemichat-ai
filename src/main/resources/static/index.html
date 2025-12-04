@@ -5,242 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GemiChat</title>
   <style>
-    /* 다크 모드 기본 색상 및 폰트 */
-    body {
-      background: #181a20;
-      color: #ececf1;
-      font-family: 'Segoe UI', 'Pretendard', Arial, sans-serif;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      width: 100%;
-      background: #21232b;
-      color: #ececf1;
-      padding: 24px 0 16px 0;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      border-bottom: 1px solid #292c36;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 0 0 32px 0;
-    }
-    .chat-container {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #363a4f #181a20;
-      padding: 8px;
-      min-height: 40vh;
-      margin-bottom: 22px;
-      background: #1c1f2a;
-      border-radius: 14px;
-      box-shadow: 0 6px 32px #0005, 0 1.5px 0 #262936;
-    }
-    .msg-row {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      gap: 8px;
-    }
-    .msg-row.user {
-      justify-content: flex-end;
-    }
-    .msg-row.ai {
-      justify-content: flex-start;
-    }
-    .bubble {
-      max-width: 76%;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-top: 2px;
-      margin-bottom: 2px;
-      word-break: break-word;
-      box-shadow: 0 2px 8px #0002;
-    }
-    .bubble.user {
-      background: #3251a8;
-      color: #fff;
-      border-bottom-right-radius: 4px;
-    }
-    .bubble.ai {
-      background: #2b2d3c;
-      color: #ececf1;
-      border-bottom-left-radius: 4px;
-    }
-    .loading {
-      color: #babbc4;
-      font-style: italic;
-      margin: 8px 0 8px 8px;
-      font-size: 1rem;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      50% { opacity: 0.5; }
-    }
-    .input-area {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      background: #20222b;
-      border-radius: 12px;
-      box-shadow: 0 1.5px 0 #232236;
-      padding: 12px 10px 12px 12px;
-      align-items: flex-end;
-      gap: 8px;
-    }
-    .input-area textarea {
-      flex: 1;
-      resize: none;
-      min-height: 36px;
-      max-height: 78px;
-      border: none;
-      border-radius: 7px;
-      background: #22242e;
-      color: #ececf1;
-      padding: 9px 10px;
-      font-size: 1rem;
-      outline: none;
-      box-shadow: none;
-      transition: border .15s;
-    }
-    .input-area button {
-      background: #4076d6;
-      color: #fff;
-      border: none;
-      padding: 8px 22px;
-      border-radius: 7px;
-      font-size: 1.08rem;
-      cursor: pointer;
-      transition: background 0.15s;
-      font-weight: 500;
-      box-shadow: 0 1.5px 0 #14539a44;
-    }
-    .input-area button:hover, .input-area button:focus {
-      background: #3860b4;
-    }
-    /* 스크롤바 커스텀 (윈도우/크롬) */
-    .chat-container::-webkit-scrollbar {
-      width: 7px;
-      background: #181a20;
-      border-radius: 8px;
-    }
-    .chat-container::-webkit-scrollbar-thumb {
-      background: #292b37;
-      border-radius: 8px;
-    }
-    @media (max-width: 600px) {
-      header, .chat-container, .input-area {
-        max-width: 99vw;
-        font-size: 0.97rem;
-      }
-      .bubble {
-        font-size: 0.99rem;
-      }
-    }
+    /* 다크 모드 스타일 */
+    body { background: #181a20; color: #ececf1; font-family: 'Segoe UI', sans-serif; margin: 0; height: 100vh; display: flex; flex-direction: column; }
+    header { background: #21232b; padding: 20px; text-align: center; font-size: 1.5rem; font-weight: bold; border-bottom: 1px solid #292c36; }
+    main { flex: 1; display: flex; flex-direction: column; padding: 20px; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+    
+    /* 채팅 영역 */
+    .chat-container { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+    .msg-row { display: flex; align-items: flex-end; }
+    .msg-row.user { justify-content: flex-end; }
+    .msg-row.ai { justify-content: flex-start; }
+    
+    .bubble { max-width: 70%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; font-size: 1rem; word-break: break-word; }
+    .bubble.user { background: #4a6ee0; color: white; border-bottom-right-radius: 4px; }
+    .bubble.ai { background: #2b2d3c; color: #ececf1; border-bottom-left-radius: 4px; }
+    
+    .loading { color: #888; font-size: 0.9rem; margin-left: 10px; animation: blink 1.5s infinite; }
+    @keyframes blink { 50% { opacity: 0.5; } }
+
+    /* 입력 영역 */
+    .input-area { display: flex; gap: 10px; background: #20222b; padding: 10px; border-radius: 10px; align-items: center; }
+    textarea { flex: 1; background: transparent; border: none; color: white; resize: none; height: 40px; padding: 10px; font-size: 1rem; outline: none; }
+    
+    /* 파일 첨부 버튼 스타일 */
+    .file-label { cursor: pointer; padding: 5px 10px; border-radius: 5px; transition: background 0.2s; }
+    .file-label:hover { background: #333; }
+    .file-icon { font-size: 1.5rem; }
+    
+    button { background: #4a6ee0; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #3b5bc4; }
   </style>
 </head>
 <body>
-  <header>GemiChat</header>
+
+  <header>GemiChat 🤖</header>
+
   <main>
-    <div id="chat" class="chat-container"></div>
-    <form id="chatForm" class="input-area" autocomplete="off" enctype="multipart/form-data">
-      <!-- 📎 파일 첨부 버튼 및 숨겨진 input -->
-      <label style="cursor:pointer;display:flex;align-items:center;" title="첨부파일">
+    <div id="chat" class="chat-container">
+      <div class="msg-row ai"><div class="bubble ai">안녕하세요! 무엇을 도와드릴까요? (PDF 파일도 읽을 수 있어요!)</div></div>
+    </div>
+
+    <form id="chatForm" class="input-area">
+      <label class="file-label" title="PDF 파일 첨부">
         <input id="fileInput" type="file" accept="application/pdf" style="display:none;">
-        <span style="font-size:1.4rem; margin-right: 8px;">📎</span>
+        <span class="file-icon">📎</span>
       </label>
-      <textarea id="messageInput" rows="1" placeholder="메시지를 입력하세요..." required></textarea>
+      
+      <textarea id="messageInput" placeholder="메시지를 입력하세요..." required></textarea>
       <button type="submit">전송</button>
     </form>
   </main>
+
   <script>
     const chatEl = document.getElementById('chat');
     const formEl = document.getElementById('chatForm');
     const inputEl = document.getElementById('messageInput');
-    let loadingEl = null;
+    const fileInput = document.getElementById('fileInput');
+
+    // 메시지 추가 함수
     function addMessage(text, sender) {
       const row = document.createElement('div');
       row.className = `msg-row ${sender}`;
-      const bubble = document.createElement('div');
-      bubble.className = `bubble ${sender}`;
-      bubble.textContent = text;
-      row.appendChild(bubble);
+      row.innerHTML = `<div class="bubble ${sender}">${text}</div>`;
       chatEl.appendChild(row);
-      chatEl.scrollTop = chatEl.scrollHeight;
+      chatEl.scrollTop = chatEl.scrollHeight; // 스크롤 맨 아래로
     }
+
+    // 로딩 표시 함수
+    let loadingMsg = null;
     function showLoading() {
-      loadingEl = document.createElement('div');
-      loadingEl.className = 'loading';
-      loadingEl.textContent = 'AI가 생각 중입니다...';
-      chatEl.appendChild(loadingEl);
+      loadingMsg = document.createElement('div');
+      loadingMsg.className = 'loading';
+      loadingMsg.textContent = 'AI가 생각 중입니다...';
+      chatEl.appendChild(loadingMsg);
       chatEl.scrollTop = chatEl.scrollHeight;
     }
-    function removeLoading() {
-      if (loadingEl && loadingEl.parentNode) {
-        chatEl.removeChild(loadingEl);
-        loadingEl = null;
-      }
+    function hideLoading() {
+      if (loadingMsg) { chatEl.removeChild(loadingMsg); loadingMsg = null; }
     }
-    const fileInput = document.getElementById('fileInput');
+
+    // 전송 이벤트
     formEl.addEventListener('submit', async (e) => {
-      e.preventDefault(); // 폼 전송 기본동작 차단
+      e.preventDefault(); // 새로고침 방지
+
       const userMsg = inputEl.value.trim();
-      if (!userMsg) return; // 빈 입력 방지
+      if (!userMsg) return;
+
+      // 1. 사용자 메시지 화면에 표시
       addMessage(userMsg, 'user');
-      inputEl.value = '';
-      inputEl.style.height = '36px';
-      showLoading();
-      try {
-        // FormData 객체로 파일과 메시지 동시에 전송
-        const fd = new FormData();
-        fd.append('message', userMsg); // 질문
-        if (fileInput.files.length > 0) {
-          fd.append('file', fileInput.files[0]); // 첨부파일(없으면 안 감)
-        }
-        // fetch로 FormData 전송
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          body: fd
-        });
-        const data = await res.json();
-        removeLoading();
-        if ('answer' in data) {
-          addMessage(data.answer, 'ai');
-        } else {
-          addMessage('[에러] 답변을 받아오지 못했습니다.', 'ai');
-        }
-        // 전송/응답 후 파일 input 리셋 (동일파일 재전송 가능하도록)
-        fileInput.value = '';
-      } catch (err) {
-        removeLoading();
-        addMessage('[에러] 서버와의 통신 중 문제가 발생했습니다.', 'ai');
+      inputEl.value = ''; // 입력창 비우기
+      
+      // 파일이 있으면 파일명도 살짝 보여주기
+      if (fileInput.files.length > 0) {
+        addMessage(`📄 파일 첨부: ${fileInput.files[0].name}`, 'user');
       }
+
+      showLoading();
+
+      try {
+        // 2. FormData 만들기 (백엔드 @RequestParam 이름과 똑같이 맞춰야 함!)
+        const formData = new FormData();
+        formData.append("message", userMsg); // "message" 이름표 붙이기
+        
+        if (fileInput.files.length > 0) {
+          formData.append("file", fileInput.files[0]); // "file" 이름표 붙이기
+        }
+
+        // 3. 서버로 전송 (헤더 설정 X - 브라우저가 알아서 함)
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          body: formData
+        });
+
+        // 4. 응답 처리
+        if (!response.ok) throw new Error("서버 에러");
+        
+        const data = await response.json();
+        hideLoading();
+        addMessage(data.answer, 'ai');
+
+      } catch (error) {
+        hideLoading();
+        console.error(error);
+        addMessage("❌ 에러가 발생했습니다. 잠시 후 다시 시도해주세요.", 'ai');
+      }
+
+      // 파일 입력 초기화
+      fileInput.value = '';
     });
-    // textarea 자동 높이 조절
-    inputEl.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 78) + 'px';
+
+    // 엔터키로 전송 (Shift+Enter는 줄바꿈)
+    inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            formEl.dispatchEvent(new Event('submit'));
+        }
     });
-    // 초기 포커스
-    window.onload = () => inputEl.focus();
+
+    // 채팅 기록 불러오기
+
+    // [추가] 초기 로딩 시 과거 대화 불러오기 (GET 요청)
+    window.onload = async () => {
+        inputEl.focus(); // 입력창에 포커스
+
+        try {
+            // 1. 서버에게 "기록 줘(GET)" 요청
+            // (주의: ChatController에 @GetMapping이 만들어져 있어야 함!)
+            const res = await fetch('/api/chat'); 
+            
+            if (!res.ok) return; // 에러나면 무시
+
+            const history = await res.json();
+
+            // 2. 받아온 기록을 하나씩 화면에 그리기
+            history.forEach(item => {
+                // 질문(User) 그리기
+                if (item.question) addMessage(item.question, 'user');
+                // 답변(AI) 그리기
+                if (item.answer) addMessage(item.answer, 'ai');
+            });
+        } catch (err) {
+            console.error("기록 불러오기 실패:", err);
+        }
+    };
   </script>
+
 </body>
 </html>
